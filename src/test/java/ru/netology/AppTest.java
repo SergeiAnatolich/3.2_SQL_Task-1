@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import ru.netology.data.DataUser;
 import ru.netology.page.LoginPage;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.*;
 
 public class AppTest {
@@ -16,5 +17,11 @@ public class AppTest {
         var verificationPage = loginPage.validLogin(authInfo);
         var verificationCode = DataUser.getVerificationCodeFor(authInfo);
         var dashboardPage = verificationPage.validVerify(verificationCode);
+        $("[data-test-id=dashboard]").shouldHave(text("Личный кабинет"));
+    }
+
+    @Test
+    void shouldCleanDB() {
+        DataUser.cleanDB();
     }
 }

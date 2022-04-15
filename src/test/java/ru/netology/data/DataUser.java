@@ -2,6 +2,7 @@ package ru.netology.data;
 
 import lombok.Value;
 import lombok.SneakyThrows;
+import org.apache.commons.dbutils.QueryRunner;
 
 import java.sql.DriverManager;
 
@@ -25,7 +26,7 @@ public class DataUser {
     }
 
     @SneakyThrows
-    private static String getIdUser(AuthInfo authInfo) {
+    private static String getIdUserFor(AuthInfo authInfo) {
         String idUser;
 
         var idUserQuery = "SELECT id FROM users WHERE login=" + '"' + getAuthInfo().getLogin() + '"' + ";";
@@ -44,7 +45,7 @@ public class DataUser {
     public static VerificationCode getVerificationCodeFor(AuthInfo authInfo) {
         String codeUser;
 
-        var codeUserQuery = "SELECT code FROM auth_codes WHERE user_id=" + '"' + getIdUser(authInfo) + '"' + " ORDER BY created DESC;";
+        var codeUserQuery = "SELECT code FROM auth_codes WHERE user_id=" + '"' + getIdUserFor(authInfo) + '"' + " ORDER BY created DESC;";
         try (var connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/alfabank_test", "sergei", "mypassword");
              var statement = connection.createStatement();
         ) {
@@ -54,5 +55,21 @@ public class DataUser {
             }
         }
         return new VerificationCode(codeUser);
+    }
+
+    @SneakyThrows
+    public static void cleanDB() {
+        var cleanAuthCodes = "DELETE FROM auth_codes;";
+        var cleanCardTransactions = "DELETE FROM card_transactions;";
+        var cleanCards = "DELETE FROM cards;";
+        var cleanUsers = "DELETE FROM users;";
+        try (var connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/alfabank_test", "sergei", "mypassword");
+             var statement = connection.createStatement();
+        ) {
+            statement.execute(cleanAuthCodes);
+            statement.execute(cleanCardTransactions);
+            statement.execute(cleanCards);
+            statement.execute(cleanUsers);
+        }
     }
 }
