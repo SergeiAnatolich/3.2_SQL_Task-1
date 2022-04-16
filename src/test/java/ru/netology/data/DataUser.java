@@ -29,7 +29,7 @@ public class DataUser {
     private static String getIdUserFor(AuthInfo authInfo) {
         String idUser;
 
-        var idUserQuery = "SELECT id FROM users WHERE login=" + '"' + getAuthInfo().getLogin() + '"' + ";";
+        var idUserQuery = "SELECT id FROM users WHERE login=" + '"' + authInfo.getLogin() + '"' + ";";
         try (var connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/alfabank_test", "sergei", "mypassword");
              var statement = connection.createStatement();
         ) {
