@@ -20,6 +20,10 @@ public class DataUser {
         return new AuthInfo("vasya", "qwerty123");
     }
 
+    public static AuthInfo getInvalidAuthInfo() {
+        return new AuthInfo("vasya", "password");
+    }
+
     @Value
     public static class VerificationCode {
         private String code;
