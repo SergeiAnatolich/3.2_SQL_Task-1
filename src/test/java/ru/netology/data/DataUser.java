@@ -1,8 +1,7 @@
 package ru.netology.data;
 
-import lombok.Value;
 import lombok.SneakyThrows;
-import org.apache.commons.dbutils.QueryRunner;
+import lombok.Value;
 
 import java.sql.DriverManager;
 
@@ -62,7 +61,7 @@ public class DataUser {
     }
 
     @SneakyThrows
-    public static void cleanDB() {
+    public static void cleanTables() {
         var cleanAuthCodes = "DELETE FROM auth_codes;";
         var cleanCardTransactions = "DELETE FROM card_transactions;";
         var cleanCards = "DELETE FROM cards;";

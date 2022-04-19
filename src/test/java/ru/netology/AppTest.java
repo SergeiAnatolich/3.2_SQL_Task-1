@@ -5,7 +5,8 @@ import org.junit.jupiter.api.Test;
 import ru.netology.data.DataUser;
 import ru.netology.page.LoginPage;
 
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
 
 public class AppTest {
 
@@ -33,6 +34,6 @@ public class AppTest {
 
     @AfterAll
     static void shouldCleanDB() {
-        DataUser.cleanDB();
+        DataUser.cleanTables();
     }
 }
