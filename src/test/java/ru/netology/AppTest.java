@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import ru.netology.data.DataUser;
 import ru.netology.page.LoginPage;
 
-import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 
 public class AppTest {
@@ -27,13 +26,13 @@ public class AppTest {
         var loginPage = new LoginPage();
         var authInfo = DataUser.getInvalidAuthInfo();
         loginPage.invalidLogin(authInfo);
-        $("[data-test-id=password] input").setValue("1");
-        $("[data-test-id=password] input").setValue("2");
+        loginPage.loginWithOtherInvalidPassword();
+        loginPage.loginWithOtherInvalidPassword();
         loginPage.systemBlocked();
     }
 
     @AfterAll
-    static void shouldCleanDB() {
+     static void shouldCleanDB() {
         DataUser.cleanTables();
     }
 }

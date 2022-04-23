@@ -1,7 +1,11 @@
 package ru.netology.page;
 
 import com.codeborne.selenide.SelenideElement;
+import com.github.javafaker.Faker;
+import org.openqa.selenium.Keys;
 import ru.netology.data.DataUser;
+
+import java.util.Locale;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
@@ -31,5 +35,14 @@ public class LoginPage {
     public void systemBlocked() {
         notificationTitle.shouldHave(text("Ошибка"));
         notificationContent.shouldHave(text("Повторный вход возможен через 30 минут"));
+    }
+
+    private static final Faker faker = new Faker(new Locale("ru"));
+
+    public void loginWithOtherInvalidPassword() {
+        passwordField.sendKeys(Keys.chord(Keys.CONTROL, "a") + Keys.DELETE);
+        String pass = faker.internet().password();
+        passwordField.setValue(pass);
+        loginButton.click();
     }
 }
